@@ -66,10 +66,88 @@
                 &gt; .container</code>.</p>
         <p>Back to <a href="/docs/5.1/examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
 
-        <div id="topListID-mega-sena-mais"></div>
-        <div id="topListID-mega-sena-menos"></div>
-        <div id="topListID-lotofacil-mais"></div>
-        <div id="topListID-lotofacil-menos"></div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-mega-sena-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-mega-sena" type="button" role="tab" aria-controls="nav-mega-sena"
+                        aria-selected="true">Mega-Sena
+                </button>
+                <button class="nav-link" id="nav-lotofacil-tab" data-bs-toggle="tab" data-bs-target="#nav-lotofacil"
+                        type="button" role="tab" aria-controls="nav-lotofacil" aria-selected="false">Lotofacil
+                </button>
+                <button class="nav-link" id="nav-gerador-jogo-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-gerador-jogo" type="button" role="tab" aria-controls="nav-gerador-jogo"
+                        aria-selected="false">Gerador Jogo
+                </button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-mega-sena" role="tabpanel"
+                 aria-labelledby="nav-mega-sena-tab">
+                <div id="topListID-mega-sena-mais"></div>
+                <div id="topListID-mega-sena-menos"></div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-lotofacil" role="tabpanel" aria-labelledby="nav-lotofacil-tab">
+                <div id="topListID-lotofacil-mais"></div>
+                <div id="topListID-lotofacil-menos"></div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-gerador-jogo" role="tabpanel" aria-labelledby="nav-gerador-jogo-tab">
+                <form id="gerador-jogo-form">
+                    <div class="row d-flex align-items-start row-cols-3">
+                        <div class="col">
+                            <label for="menorNumero" class="form-label">Menor Numero</label>
+                            <input type="number" class="form-control" name="menorNumero" id="menorNumero"
+                                   aria-describedby="menorNumeroHelp">
+                            <div id="menorNumeroNumeroHelp" class="form-text">We'll never share your email with anyone
+                                else.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="maiorNumero" class="form-label">Maior Numero</label>
+                            <input type="number" class="form-control" name="maiorNumero" id="maiorNumero"
+                                   aria-describedby="maiorNumeroHelp">
+                            <div id="maiorNumeroHelp" class="form-text">We'll never share your email with anyone else.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="qtdNumeros" class="form-label">Quantidade de Numeros</label>
+                            <input type="number" class="form-control" name="qtdNumeros" id="qtdNumeros"
+                                   aria-describedby="qtdNumerosHelp">
+                            <div id="qtdNumerosHelp" class="form-text">We'll never share your email with anyone else.
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary"
+                                    onclick="(function(){
+                                        let form = document.getElementById('gerador-jogo-form');
+                                        let numbersMap = gerarJogo(form.menorNumero.value, form.maiorNumero.value, form.qtdNumeros.value);
+                                        let nums = '';
+                                        for (let num of numbersMap.values()) {
+                                            console.log(num);
+                                            nums += ' - ' + num;
+                                        }
+                                        nums = nums.replace(' - ','');
+                                        document.getElementById('numerosDiv').innerHTML = nums;
+                                    })();">
+                                Gerar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <h3><div id="numerosDiv"></div></h3>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
     </div>
 
 </main>

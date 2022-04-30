@@ -1,5 +1,6 @@
 
-const URL_BASE = "https://msc-loteria-api.herokuapp.com/msc-loteria-api"
+// const URL_BASE = "https://msc-loteria-api.herokuapp.com/msc-loteria-api"
+const URL_BASE = "http://localhost:8081/msc-loteria-api"
 
 let jogosNome = ["mega-sena", 'loteria']
 

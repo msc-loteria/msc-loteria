@@ -8,7 +8,8 @@ async function loadHome() {
     // console.info("topListJson: " + topListJson);
     let topListMap = new Map(Object.entries(topListJson));
 
-    loadTabs(topListMap);
+    // loadTabs(topListMap);
+    loadNavTabs(topListMap);
 
 }
 
@@ -79,17 +80,17 @@ function ordered (topListMap) {
     return numbers;
 }
 
-function loadTabs (topListMap) {
+/*function loadTabs (topListMap) {
 
     for (let [jogoKey, jogoValue] of topListMap.entries()) {
 
         let jogoValueMap = new Map(Object.entries(jogoValue));
         jogoValueMap = ordered(jogoValueMap);
 
-        const keys = [];
-        for (let [key, value] of jogoValueMap.entries()) {
-            keys.push(key);
-        }
+        // const keys = [];
+        // for (let [key, value] of jogoValueMap.entries()) {
+        //     keys.push(key);
+        // }
 
         let dataCharts = [];
         for (let [key, value] of jogoValueMap.entries()) {
@@ -118,17 +119,77 @@ function loadTabs (topListMap) {
         }
 
     }
-    `<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-  </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-</div>`
 
+}*/
+
+function loadNavTabs (topListMap) {
+
+    for (let [jogoKey, jogoValue] of topListMap.entries()) {
+
+        let jogoValueMap = new Map(Object.entries(jogoValue));
+        jogoValueMap = ordered(jogoValueMap);
+
+        let dataCharts = [];
+        for (let [key, value] of jogoValueMap.entries()) {
+            dataCharts.push({name: "N:" + key, y: value});
+        }
+
+        let chartContainer = "topListID-" + jogoKey;
+        let conf = getConf(jogoKey);
+
+        let charts = dataCharts.slice((conf.qtdNumerosExibidos * -1), dataCharts.length);
+        highCharts(chartContainer + "-mais", charts, jogoKey.toUpperCase() + ': Números mais saíram nos ultimos 100 jogos');
+
+        charts = dataCharts.slice(0, conf.qtdNumerosExibidos);
+        highCharts(chartContainer + "-menos", charts, jogoKey.toUpperCase() + ': Números menos saíram nos ultimos 100 jogos');
+
+    }
+
+}
+
+function getConf (jogoKey) {
+    let jogo = new Map();
+    jogo.set("mega-sena", getMegasenaConf());
+    jogo.set("lotofacil", getLotofacilConf());
+
+    return jogo.get(jogoKey);
+}
+
+function getMegasenaConf() {
+
+    let obj = new Object();
+    obj.nome = "mega-sena";
+    obj.qtdNumerosExibidos = 12;
+
+    return obj
+}
+
+function getLotofacilConf() {
+
+    let obj = new Object();
+    obj.nome = "lotofacil";
+    obj.qtdNumerosExibidos = 12;
+
+    return obj
+}
+
+function gerarJogo(menorNumero, maiorNumero, qtdNumeros) {
+
+    console.log("menorNumero", menorNumero, "maiorNumero", maiorNumero, "qtdNumeros", qtdNumeros);
+
+    let numbersMap = new Map();
+    for (let i = 0; i < qtdNumeros; i++) {
+
+        // console.log("i: " + i);
+        let number = Math.floor(Math.random() * Number.parseInt(maiorNumero)) + Number.parseInt(menorNumero);
+        let val = numbersMap.get(number);
+        if (number < menorNumero || val === 'undefined') {
+            i--
+            continue
+        }
+        numbersMap.set(number, number);
+    }
+
+    numbersMap = ordered(numbersMap);
+    return numbersMap;
 }
