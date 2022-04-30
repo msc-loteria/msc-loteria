@@ -1,0 +1,37 @@
+numeros := map[string]int{
+		"01": 15,
+		"10": 1,
+		"22": 30,
+		"60": 200,
+	}
+
+	keys := []string{}
+	for key := range numeros {
+		keys = append(keys, key)
+	}
+
+	sort.SliceStable(keys, func(i, j int) bool { return numeros[keys[i]] < numeros[keys[j]] })
+	for _, key := range keys {
+		fmt.Println("By value:", key)
+	}
+	fmt.Println("#########################")
+
+	for i := 0; i < len(keys); i++ {
+		for j := 0; j < len(keys); j++ {
+			if numeros[keys[i]] < numeros[keys[j]] {
+				temp := keys[i]
+				keys[i] = keys[j]
+				keys[j] = temp
+			}
+		}
+	}
+
+	numbers := map[string]int{}
+	for _, key := range keys {
+		fmt.Println("By value:", numeros[key])
+		numbers[key] = numeros[key]
+	}
+	//for _, key := range numbers {
+	//	fmt.Println("By value:", numbers[key])
+
+	//	}
