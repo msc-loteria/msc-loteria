@@ -30,8 +30,8 @@
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Fixed navbar</a>
+        <div class="container">
+            <a class="navbar-brand" href="#">Loteria</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -48,10 +48,10 @@
                         <a class="nav-link disabled">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+<!--                <form class="d-flex">-->
+<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--                </form>-->
             </div>
         </div>
     </nav>
@@ -60,11 +60,8 @@
 <!-- Begin page content -->
 <main class="flex-shrink-0">
     <div class="container">
-        <h1 class="mt-5">Sticky footer with fixed navbar</h1>
-        <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A
-            fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code class="small">main
-                &gt; .container</code>.</p>
-        <p>Back to <a href="/docs/5.1/examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
+        <h1 class="mt-5">Loteria</h1>
+        <p class="lead">Utilizado para ter uma visao basica sobre alguns temas de loteria.</p>
 
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -95,56 +92,63 @@
 
             <div class="tab-pane fade" id="nav-gerador-jogo" role="tabpanel" aria-labelledby="nav-gerador-jogo-tab">
                 <form id="gerador-jogo-form">
-                    <div class="row d-flex align-items-start row-cols-3">
-                        <div class="col">
+                    <div class="row align-items-start">
+                        <div class="col-xs-12 col-sm-4">
                             <label for="menorNumero" class="form-label">Menor Numero</label>
                             <input type="number" class="form-control" name="menorNumero" id="menorNumero"
                                    aria-describedby="menorNumeroHelp">
-                            <div id="menorNumeroNumeroHelp" class="form-text">We'll never share your email with anyone
-                                else.
+                            <div id="menorNumeroNumeroHelp" class="form-text">
+                                Informe o menor numero a constar.
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-xs-12 col-sm-4">
                             <label for="maiorNumero" class="form-label">Maior Numero</label>
                             <input type="number" class="form-control" name="maiorNumero" id="maiorNumero"
                                    aria-describedby="maiorNumeroHelp">
-                            <div id="maiorNumeroHelp" class="form-text">We'll never share your email with anyone else.
+                            <div id="maiorNumeroHelp" class="form-text">
+                                Informe o maior numero a constar.
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-xs-12 col-sm-4">
                             <label for="qtdNumeros" class="form-label">Quantidade de Numeros</label>
                             <input type="number" class="form-control" name="qtdNumeros" id="qtdNumeros"
                                    aria-describedby="qtdNumerosHelp">
-                            <div id="qtdNumerosHelp" class="form-text">We'll never share your email with anyone else.
+                            <div id="qtdNumerosHelp" class="form-text">
+                                Informe a quantidade numeros a constar.
                             </div>
                         </div>
 
                     </div>
                     <div class="row align-items-start">
-                        <div class="col">
+                        <div class="d-grid gap-2 col-xs-12 col-sm-2">
                             <button type="button" class="btn btn-primary"
                                     onclick="(function(){
-                                        let form = document.getElementById('gerador-jogo-form');
-                                        let numbersMap = gerarJogo(form.menorNumero.value, form.maiorNumero.value, form.qtdNumeros.value);
+                                        const form = document.getElementById('gerador-jogo-form');
+                                        const numbersMap = gerarJogo(form.menorNumero.value, form.maiorNumero.value, form.qtdNumeros.value);
+                                        if (numbersMap === false) {
+                                            return
+                                        }
                                         let nums = '';
                                         for (let num of numbersMap.values()) {
-                                            console.log(num);
+                                            // console.log(num);
                                             nums += ' - ' + num;
                                         }
                                         nums = nums.replace(' - ','');
-                                        document.getElementById('numerosDiv').innerHTML = nums;
+                                        document.getElementById('numerosDiv').innerHTML = 'Resultado: ' + nums;
                                     })();">
                                 Gerar
                             </button>
                         </div>
                     </div>
-                    <div class="row align-items-start">
-                        <div class="col">
-                            <h3><div id="numerosDiv"></div></h3>
-                        </div>
-                    </div>
-
                 </form>
+
+                <div class="row align-items-start">
+                    <div class="col">
+                        <p class="h3 text-muted">
+                        <div id="numerosDiv"></div>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 

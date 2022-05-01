@@ -8,7 +8,6 @@ async function loadHome() {
     // console.info("topListJson: " + topListJson);
     let topListMap = new Map(Object.entries(topListJson));
 
-    // loadTabs(topListMap);
     loadNavTabs(topListMap);
 
 }
@@ -80,48 +79,6 @@ function ordered (topListMap) {
     return numbers;
 }
 
-/*function loadTabs (topListMap) {
-
-    for (let [jogoKey, jogoValue] of topListMap.entries()) {
-
-        let jogoValueMap = new Map(Object.entries(jogoValue));
-        jogoValueMap = ordered(jogoValueMap);
-
-        // const keys = [];
-        // for (let [key, value] of jogoValueMap.entries()) {
-        //     keys.push(key);
-        // }
-
-        let dataCharts = [];
-        for (let [key, value] of jogoValueMap.entries()) {
-            dataCharts.push({name: "N:" + key, y: value});
-        }
-
-        let chartContainer = "topListID-" + jogoKey;
-        if (jogoKey === 'mega-sena') {
-
-            let charts = dataCharts.slice(-12, dataCharts.length);
-            highCharts(chartContainer + "-mais", charts, jogoKey.toUpperCase() + ': Números mais saíram nos ultimos 100 jogos');
-
-            charts = dataCharts.slice(0, 12);
-            highCharts(chartContainer + "-menos", charts, jogoKey.toUpperCase() + ': Números menos saíram nos ultimos 100 jogos');
-
-        }
-
-        if (jogoKey === 'lotofacil') {
-
-            let charts = dataCharts.slice(-15, dataCharts.length);
-            highCharts(chartContainer + "-mais", charts, jogoKey.toUpperCase() + ': Números mais saíram nos ultimos 100 jogos');
-
-            charts = dataCharts.slice(0, 15);
-            highCharts(chartContainer + "-menos", charts, jogoKey.toUpperCase() + ': Números menos saíram nos ultimos 100 jogos');
-
-        }
-
-    }
-
-}*/
-
 function loadNavTabs (topListMap) {
 
     for (let [jogoKey, jogoValue] of topListMap.entries()) {
@@ -176,20 +133,25 @@ function getLotofacilConf() {
 function gerarJogo(menorNumero, maiorNumero, qtdNumeros) {
 
     console.log("menorNumero", menorNumero, "maiorNumero", maiorNumero, "qtdNumeros", qtdNumeros);
+    if (!Number.isInteger(Number.parseInt(menorNumero)) || !Number.isInteger(Number.parseInt(maiorNumero))
+        || !Number.isInteger(Number.parseInt(qtdNumeros))) {
+        console.log("not a number");
+        return false
+    }
 
     let numbersMap = new Map();
-    for (let i = 0; i < qtdNumeros; i++) {
-
-        // console.log("i: " + i);
-        let number = Math.floor(Math.random() * Number.parseInt(maiorNumero)) + Number.parseInt(menorNumero);
+    let i = 0;
+    while (i < qtdNumeros) {
+        const number = Math.floor(Math.random() * Number.parseInt(maiorNumero)) + Number.parseInt(menorNumero);
         let val = numbersMap.get(number);
-        if (number < menorNumero || val === 'undefined') {
-            i--
-            continue
+        if (number >= menorNumero && !Number.isInteger(val)) {
+            // console.log("i: " + i + " - number: " + number);
+            numbersMap.set(number, number);
+            i++;
         }
-        numbersMap.set(number, number);
     }
 
     numbersMap = ordered(numbersMap);
+    console.log("numbersMap: " + numbersMap);
     return numbersMap;
 }
